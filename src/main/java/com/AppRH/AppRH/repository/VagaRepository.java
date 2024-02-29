@@ -10,4 +10,5 @@ public interface VagaRepository {
     Vaga findByCodigo (long codigo);
     List<Vaga> findByNome(String nome);
 
+    Iterable<Vaga> findAll();
 }
