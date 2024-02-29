@@ -1,6 +1,5 @@
 package com.AppRH.AppRH;
 
-import org.hibernate.Hibernate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -11,7 +10,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import javax.sql.DataSource;
 
 
-@Configuration //Classe de configuração de Banco de Dados
+@Configuration
 public class DataConfiguration {
 
     @Bean //A anotation Bean trabalha com exportação de classes. Ajuda a fazer injeção de dependencia dessa classe em outras.
