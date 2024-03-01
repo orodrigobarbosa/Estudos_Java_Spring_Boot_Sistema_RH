@@ -65,24 +65,22 @@ public class VagaController {
     }
 
 
-
-
     //DETALHES DA VAGA
 
     public String detalhesVagaPost(@PathVariable("codigo") long codigo, @Valid Candidato candidato, BindingResult result, RedirectAttributes attributes) {
 
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             attributes.addFlashAttribute("mensagem", "Verifique os campos");
             return "redirect:/{codigo}";
         }
 
 
         //TESTE DE CONSISTENCIA - RG DUPLICADO
-        if(cr.findByRg(candidato.getRg())!=null){
+        if (cr.findByRg(candidato.getRg()) != null) {
             attributes.addFlashAttribute("mensagem erro", "RG duplicado");
             return "redirect:/{codigo}";
         }
-        //grava o candidato na vaga
+        //SE NAO FOR DUPLICADO, CONTINUA E GRAVA O CANDIDATO NA VAGA
         Vaga vaga = vr.findByCodigo(codigo);
         candidato.setVaga(vaga);
         cr.save(candidato);
@@ -102,4 +100,40 @@ public class VagaController {
     }
 
 
+    //DELETA CANDIDATO PELO RG///
+    @RequestMapping("/deletarCandidato")
+    public String deletarCandidato(String rg) {
+        Candidato candidato = cr.findByRg(rg);
+
+        //*criacao de uma url de retorno
+        Vaga vaga = candidato.getVaga();
+        String codigo = "" + vaga.getCodigo();
+
+        cr.delete(candidato);
+        return "redirect:/" + codigo;
+    }
+
+
+    //METODOS PARA ATUALIZAR VAGAS
+    //Formulario Edicao de Vaga
+    @RequestMapping(value = "/editar-vaga", method = RequestMethod.GET)
+    public ModelAndView editarVaga(long codigo) {
+        Vaga vaga = vr.findByCodigo(codigo);
+
+        ModelAndView mv = new ModelAndView("vaga/update-vaga");
+        mv.addObject("vaga", vaga);
+        return mv;
+    }
+
+    //UPDATE DA VAGA (POST)
+    @RequestMapping(value = "/editar-vaga", method = RequestMethod.POST)
+    public String updateVaga(@Valid Vaga vaga, BindingResult result, RedirectAttributes attributes){
+        vr.save(vaga);
+        attributes.addFlashAttribute("sucess", "Vaga alterada com sucesso");
+
+        //*criacao de uma url de retorno
+        long codigoLong = vaga.getCodigo();
+        String codigo = "" + codigoLong;
+        return "redirect:/" + codigo;
+    }
 }
