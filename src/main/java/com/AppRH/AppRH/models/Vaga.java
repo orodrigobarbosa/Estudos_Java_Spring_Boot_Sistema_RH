@@ -16,9 +16,9 @@ import java.util.List;
 @Entity
 public class Vaga implements Serializable { //serializable transforma o arquivo em binário para poder trabalhar com ele
     private static final long serialVersionUID = 1L; //Atributo que faz o controle de versionamento. Verifica se a versão do objeto é compatível com a versão serializada
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) //gerador de id para cada vaga utilizando o parâmetro "código"
-    @NotEmpty
     private long codigo;
 
     @NotEmpty
@@ -31,7 +31,7 @@ public class Vaga implements Serializable { //serializable transforma o arquivo 
     private String data;
 
     @NotEmpty
-    private BigDecimal salario;
+    private String salario;
 
     @OneToMany(mappedBy = "vaga", cascade =  CascadeType.REMOVE) //quando uma vaga for deletada, será deletado também um candidato
     private List<Candidato> candidatos;

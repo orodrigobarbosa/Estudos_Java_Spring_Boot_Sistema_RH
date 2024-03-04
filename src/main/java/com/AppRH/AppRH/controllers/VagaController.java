@@ -5,6 +5,7 @@ import com.AppRH.AppRH.models.Vaga;
 import com.AppRH.AppRH.repository.CandidatoRepository;
 import com.AppRH.AppRH.repository.VagaRepository;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class VagaController {
-
+    @Autowired
     private VagaRepository vr;
+    @Autowired
     private CandidatoRepository cr;
 
 
@@ -51,6 +53,8 @@ public class VagaController {
 
     }
 
+
+    //DETALHES DA VAGA
     ////LISTA DE PESSOAS QUE SE CADASTRAREM EM UMA VAGA
     @RequestMapping(value = "/{codigo}", method = RequestMethod.GET)
     public ModelAndView detalhesVaga(@PathVariable("codigo") long codigo) {
@@ -127,7 +131,7 @@ public class VagaController {
 
     //UPDATE DA VAGA (POST)
     @RequestMapping(value = "/editar-vaga", method = RequestMethod.POST)
-    public String updateVaga(@Valid Vaga vaga, BindingResult result, RedirectAttributes attributes){
+    public String updateVaga(@Valid Vaga vaga, BindingResult result, RedirectAttributes attributes) {
         vr.save(vaga);
         attributes.addFlashAttribute("sucess", "Vaga alterada com sucesso");
 
