@@ -20,7 +20,7 @@ public class DataConfiguration {
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/AppRH?useTimezone=true&serverTimeZone=UTC");
         dataSource.setUsername("root");
-        dataSource.setPassword("rod1234");
+
         return dataSource;
     }
     @Bean
